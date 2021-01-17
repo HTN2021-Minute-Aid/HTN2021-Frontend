@@ -1,0 +1,22 @@
+{
+  "name": "htn2021-frontend",
+  "version": "1.0.0",
+  "description": "the frontend for our htn2020++ project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HTN2021-Minute-Aid/HTN2021-Frontend.git"
+  },
+  "author": "Joseph Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HTN2021-Minute-Aid/HTN2021-Frontend/issues"
+  },
+  "homepage": "https://github.com/HTN2021-Minute-Aid/HTN2021-Frontend#readme",
+  "dependencies": {
+    "create-react-app": "^4.0.1"
+  }
+}
