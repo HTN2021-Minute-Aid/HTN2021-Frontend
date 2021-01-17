@@ -70,6 +70,26 @@ const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) 
     }
   }
 
+  const removeTranscript = async (transcriptID: string) => {
+    setLoadingTranscript(true);
+    setSelectedTranscript(null);
+    
+    try {
+      const res = await fetch(deleteTranscriptUrl, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({transcriptID: transcriptID})
+      })
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   // run once to get data
   useEffect(() => {
     (!debug) ? getData() : console.log("debug");
@@ -93,11 +113,13 @@ const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) 
   const convertIdToInfo = (id: TranscriptID): TranscriptInfo => {
     const info: TranscriptInfo = {
       name: id.title,
+      transcriptID: id.transcriptID,
       contentID: id.contentID
     }
 
     return info;
   }
+
 
   // const coolDebugger = (eee: string): void => {
   //   setLoadingTranscript(true);
@@ -111,10 +133,17 @@ const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) 
     getTranscript(contentID);
   }
 
+  const removeSelectedTranscript = (transcriptID: string): void => {
+    console.log(transcriptID);
+    removeTranscript(transcriptID).then(() => {
+      getData();
+    });
+  }
+
   const generateDynamicPage = (): ReactElement => {
     return (
       <div className="full-container">
-        <Sidebar transcriptNames={data.transcripts.map(convertIdToInfo)} clickHandler={getSelectedTranscript} />
+        <Sidebar transcriptNames={data.transcripts.map(convertIdToInfo)} clickHandler={getSelectedTranscript} trashHandler={removeSelectedTranscript}/>
         {/* <Sidebar transcriptNames={[{name: "transcript a", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}]} clickHandler={coolDebugger} /> */}
         {!loadingTranscript ? <InfoPanel transcript={selectedTranscript}/> : <InfoPanel transcript={undefined} /> }
 

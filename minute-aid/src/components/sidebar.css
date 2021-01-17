@@ -14,15 +14,20 @@
 .sidebar-box {
   width: 100%;
   height: 10%;
-  transition-duration: 0.4s;
+  transition-duration: 0.2s;
   text-align: center;
   color: #d1d1d1;
-  border: 2px solid #51555f;
+  border: 2px solid #838383;
   background-color: #282c34;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
 }
 
 .sidebar-box:hover {
-  transition-duration: 0.4s;
   background-color: #5b616d;
 }
 
@@ -39,4 +44,27 @@
 .scroll-2::-webkit-scrollbar-thumb {
   border-radius: 10px;
 	background-color: #707070;
+}
+
+.trash-can-div {
+  height: 100%;
+  width: 20%;
+
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+
+  background-color: #3d4149;
+  transition-duration: 0.2s;
+}
+
+.trash-can-div:hover {
+  background-color: #bd2f2f;
+}
+
+.trash-can {
+  margin: auto;
+  /* height: 100%; */
+  width: 100%;
 }

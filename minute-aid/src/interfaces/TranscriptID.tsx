@@ -1,5 +1,6 @@
 export default interface TranscriptID {
   ownerID: string,
+  transcriptID: string,
   contentID: string,
   title: string,
   date: {

@@ -7,11 +7,7 @@ interface Props {
 export const Header: React.FC<Props> = ({username}) => {
 
   const style = {
-    color: 'white',
-    fontSize: 16,
-    display: 'inline-block',
-    margin: 'auto',
-    'white-space': 'nowrap',
+    
   };
   return (
     <div className="header">
@@ -19,8 +15,9 @@ export const Header: React.FC<Props> = ({username}) => {
         <a href="#top">
           <img className="header-logo-img" src="icon128.png" alt=""/>
         </a>
+
+        <p className="header-title">Minute-Aid</p>
       </div>
-      <p style={style}>Minute-Aid</p>
       <div className="header-links">
         <p className="header-text">
           {username}

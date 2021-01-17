@@ -20,7 +20,8 @@ export const InfoPanel: React.FC<InfoPanelProps> = (props: InfoPanelProps) => {
   }
 
   const generateSections = (): ReactElement => {
-    return <React.Fragment>
+    return (
+    <React.Fragment>
       <div className="inner-panel scroll-1">
         <h2> Transcript: </h2>
         <div className="left-align">
@@ -32,6 +33,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = (props: InfoPanelProps) => {
         {generateKeywords()}
       </div>
     </React.Fragment>
+    )
   }
   
   return (
