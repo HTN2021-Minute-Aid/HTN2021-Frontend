@@ -1,131 +1,60 @@
-import './App.css';
-import React, {ReactElement, useState, useEffect} from 'react';
+import "./App.css";
+import React, { useState, useEffect } from 'react';
+import firebase from "firebase/app";
 
-import ResponseObj from './interfaces/ResponseObj';
-import TranscriptContent from './interfaces/TranscriptContent';
+import 'firebase/auth';
+import TranscriptApp from './TranscriptApp';
+import { Login } from './components/Login';
+import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 
-import { Header } from './components/Header';
-import { Sidebar } from './components/Sidebar';
-import { InfoPanel } from './components/InfoPanel';
-import TranscriptID from './interfaces/TranscriptID';
-import UserTranscripts from './interfaces/UserTranscripts';
-import TranscriptInfo from './interfaces/TranscriptInfo';
-
-const debug = false;
-
-const userTranscriptUrl = "https://minute-aid.herokuapp.com/users/transcripts";
-const deleteTranscriptUrl = "https://minute-aid.herokuapp.com/transcripts/delete";
-const transcriptContentUrl = "https://minute-aid.herokuapp.com/users/transcripts/content";
-
-function App() {
-  const [data, setData] = useState<UserTranscripts>(null);
-  const [selectedTranscript, setSelectedTranscript] = useState<TranscriptContent>(null);
-  const [loadingMain, setLoadingMain] = useState<boolean>(true);
-  const [loadingTranscript, setLoadingTranscript] = useState<boolean>(true);
-  
-  const getData = async () => {
-    try {
-      const res = await fetch(userTranscriptUrl, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({userID: "2SS0lCXwZhPvWv1nnRpem7Te8dg1", hi: "shootme"})
-      });
-
-      const returnedObj: ResponseObj = await res.json();
-      setData(returnedObj.obj as TranscriptID);
-    } catch(e) {
-      console.error(e);
-    }
-  }
-
-  const getTranscript = async (transcriptId: string) => {
-    setLoadingTranscript(true);
-
-    try {
-      const res = await fetch(transcriptContentUrl, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({contentID: transcriptId})
-      })
-
-      const returnedObj: ResponseObj = await res.json();
-      setSelectedTranscript(returnedObj.obj as UserTranscripts);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  // run once to get data
-  useEffect(() => {
-    (!debug) ? getData() : console.log("debug");
-  }, []);
-
-  // let us know if we're done loading
-  useEffect(() => {
-    if (data) {
-      setLoadingMain(false);
-      console.log(data);
-    }
-  }, [data]);
+const App: React.FC = () => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
 
   useEffect(() => {
-    if (selectedTranscript) {
-      setLoadingTranscript(false);
-      console.log(selectedTranscript);
-    }
-  }, [selectedTranscript]);
+    const firebaseConfig = {
+      apiKey: "AIzaSyDQEdAe6M-gLb-hRhFXwN87jvnDiwdxdnw",
+      authDomain: "htn2021-eefb8.firebaseapp.com",
+      projectId: "htn2021-eefb8",
+      storageBucket: "htn2021-eefb8.appspot.com",
+      messagingSenderId: "1049440900127",
+      appId: "1:1049440900127:web:90ab8916d3f822a90f712a",
+      measurementId: "G-0512QVLDNV"
+    };
+    firebase.initializeApp(firebaseConfig);
+  }, [])
 
-  const convertIdToInfo = (id: TranscriptID): TranscriptInfo => {
-    const info: TranscriptInfo = {
-      name: id.title,
-      contentID: id.contentID
-    }
-
-    return info;
-  }
-
-  // const coolDebugger = (eee: string): void => {
-  //   setLoadingTranscript(true);
-  //   setSelectedTranscript({
-  //     content: [{name: "a", content: "bbb"}, {name: "a", content: "bbb"}, {name: "a", content: "bbb"}, {name: "a", content: "bbb"}, {name: "a", content: "bbb"}],
-  //     keywords: ["yes", "emoji moovie", "despacito"]
-  //   });
+  // const onLogin = (response: GoogleLoginResponse | GoogleLoginResponseOffline): void => {
+  //   console.log("Success!");
+  //   const credential = firebase.auth.GoogleAuthProvider.credential(response.tokenId)
+  //   const userInfo = firebase.auth().signInWithCredential(credential)
+  //     .then((info) => {
+  //       const uid = info.user.uid;
+    
+  //       console.log(uid);
+  //       // setUserId(uid);
+  //       // setLoggedIn(true);
+  //     });
   // }
 
-  const getSelectedTranscript = (contentID: string): void => {
-    getTranscript(contentID);
+  // const onFailedLogin = (error: any): void => {
+  //   console.log("Failed login!");
+  // }
+
+  const onFirebaseLogin = (uid: string) => {
+    // console.log(uid);
+    
+    setUserId(uid);
+    setLoggedIn(true);
   }
 
-  const generateDynamicPage = (): ReactElement => {
-    return (
-      <div className="full-container">
-        <Sidebar transcriptNames={data.transcripts.map(convertIdToInfo)} clickHandler={getSelectedTranscript} />
-        {/* <Sidebar transcriptNames={[{name: "transcript a", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}]} clickHandler={coolDebugger} /> */}
-        {!loadingTranscript ? <InfoPanel transcript={selectedTranscript}/> : <InfoPanel transcript={undefined} /> }
-        
-      </div>
-    );
+  if (!loggedIn) {
+    // return <Login onSuccess={onLogin} onFailure={onFailedLogin} onFirebaseSuccess={onFirebaseLogin}/> 
+    return <Login onFirebaseSuccess={onFirebaseLogin}/> 
   }
 
-  return (
-    <div id="top" className="App">
-      <header className="App-header">
-        <Header />
-      </header>
-      
-      {(!loadingMain || debug) ? generateDynamicPage() : undefined}
-    </div>
-  );
+  // return <TranscriptApp userID="2SS0lCXwZhPvWv1nnRpem7Te8dg1"/>
+  return <TranscriptApp userID={userId}/>
 }
 
 export default App;

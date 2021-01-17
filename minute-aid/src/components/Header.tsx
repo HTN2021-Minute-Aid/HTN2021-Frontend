@@ -5,7 +5,7 @@ export const Header: React.FC = () => {
     <div className="header">
       <div className="header-logo">
         <a href="#top">
-          <img className="header-logo-img" src="/1.PNG" alt=""/>
+          <img className="header-logo-img" src="icon128.png" alt=""/>
         </a>
       </div>
       <div className="header-links">

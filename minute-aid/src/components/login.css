@@ -1,0 +1,60 @@
+.login-box {
+  position: fixed;
+  margin: auto;
+  text-align: center;
+  top: 25%;
+  left: 25%;
+  width: 50vw;
+  height: 50vh;
+  background-color: #2f3238;
+  box-shadow: 5px 10px 20px #131313;
+}
+
+.google-container {
+  margin: auto;
+  position: relative;
+  top: 25%;
+}
+
+.main-logo {
+  margin: auto;
+  position: relative;
+  top: 15%;
+
+  max-width: 40%;
+  height: 40%;
+}
+
+.fblogin {
+  width: 18em;
+  height: 3.5em;
+  /* border: 2px solid green; */
+  border-radius: 16px;
+  background-color: #a9a9a9;
+  cursor: pointer;
+  transition-duration: 0.4s;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+}
+
+.fblogin:hover {
+  background-color: #d1d1d1;
+}
+
+.fblogin:focus {
+  outline: none;
+}
+
+.fblogin-text {
+  color: #292929;
+  font-size: 16px;
+  margin: auto;
+}
+
+.fblogin-logo {
+  max-width: 50%;
+  max-height: 95%;
+}
