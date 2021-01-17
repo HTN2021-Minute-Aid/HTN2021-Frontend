@@ -2,20 +2,8 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #474d59;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,15 +12,63 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.header {
+  width: 100%;
+  min-height: 10vh;
+  height: 10vh;
+  /* max-height: 15vh; */
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  background-color: black;
+
+  display: flex;
+  flex-flow: row;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header-logo {
+  width: 20%;
+  text-align: left;
+  align-items: center;
+}
+
+.header-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 16px;
+  color: white
+}
+
+.header-logo-img {
+  max-height: 7vh;
+  max-width: 7vh;
+  padding: 5% 5% 5% 5%;
+}
+
+.header-links {
+  text-align: right;
+  align-items: center;
+  margin: auto;
+  width: 80%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.marker {
+  border: 5px solid green;
+}
+
+.marker2 {
+  border: 5px solid violet;
+}
+.marker3 {
+  border: 5px solid blue;
+}
+
+.full-container {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: row;
 }
