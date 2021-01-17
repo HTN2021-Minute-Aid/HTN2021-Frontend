@@ -1,5 +1,5 @@
 import './login.css';
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 import "firebase/auth";
 import React from 'react';
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
@@ -10,7 +10,7 @@ export interface LoginProps {
   // onSuccess: (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
   // onFailure: (errpr: any) => void;
 
-  onFirebaseSuccess: (uid: String) => void;
+  onFirebaseSuccess: (uid: String, name) => void;
 }
 
 export const Login: React.FC<LoginProps> = (props: LoginProps) => {
@@ -18,10 +18,11 @@ export const Login: React.FC<LoginProps> = (props: LoginProps) => {
     const provider = new firebase.auth.GoogleAuthProvider();
     const userInfo = await firebase.auth().signInWithPopup(provider);
     const uid = userInfo.user.uid;
-    
-    props.onFirebaseSuccess(uid);
+    //@ts-ignore
+    const name = userInfo.additionalUserInfo.profile.name;
+    props.onFirebaseSuccess(uid, name);
   }
-  
+
   return (
     <div className="login-box">
       <img className="main-logo" src="icon128.png" alt="" />

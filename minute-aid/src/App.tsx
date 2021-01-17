@@ -1,8 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from 'react';
-import firebase from "firebase/app";
+import firebase from "@firebase/app";
 
-import 'firebase/auth';
+import '@firebase/auth';
 import TranscriptApp from './TranscriptApp';
 import { Login } from './components/Login';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
@@ -10,6 +10,7 @@ import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-lo
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
+  const [username, setUsername] = useState<string>();
 
   useEffect(() => {
     const firebaseConfig = {
@@ -30,7 +31,7 @@ const App: React.FC = () => {
   //   const userInfo = firebase.auth().signInWithCredential(credential)
   //     .then((info) => {
   //       const uid = info.user.uid;
-    
+
   //       console.log(uid);
   //       // setUserId(uid);
   //       // setLoggedIn(true);
@@ -41,20 +42,21 @@ const App: React.FC = () => {
   //   console.log("Failed login!");
   // }
 
-  const onFirebaseLogin = (uid: string) => {
+  const onFirebaseLogin = (uid: string, name: string) => {
     // console.log(uid);
-    
+
     setUserId(uid);
+    setUsername(name);
     setLoggedIn(true);
   }
 
   if (!loggedIn) {
-    // return <Login onSuccess={onLogin} onFailure={onFailedLogin} onFirebaseSuccess={onFirebaseLogin}/> 
-    return <Login onFirebaseSuccess={onFirebaseLogin}/> 
+    // return <Login onSuccess={onLogin} onFailure={onFailedLogin} onFirebaseSuccess={onFirebaseLogin}/>
+    return <Login onFirebaseSuccess={onFirebaseLogin}/>
   }
 
   // return <TranscriptApp userID="2SS0lCXwZhPvWv1nnRpem7Te8dg1"/>
-  return <TranscriptApp userID={userId}/>
+  return <TranscriptApp userID={userId} username={username}/>
 }
 
 export default App;
