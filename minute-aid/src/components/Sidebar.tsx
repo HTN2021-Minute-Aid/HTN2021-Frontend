@@ -5,14 +5,14 @@ import { SidebarBox } from './SidebarBox';
 
 export interface SidebarProps {
   transcriptNames: TranscriptInfo[];
-  clickHandler: (string) => void;
+  clickHandler: (contentID: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = (props: SidebarProps) => {
   console.log(props.transcriptNames)
-  const generateBoxes = (): ReactElement => {
+  const generateBoxes = (): ReactElement[] => {
     return props.transcriptNames.map((info, i) => {
-      return <SidebarBox info={info} defaultColor="#282c34" hoverColor="#4a4f59" clickHandler={props.clickHandler} key={i} />
+      return <SidebarBox info={info} clickHandler={props.clickHandler} key={i} />
     })
   }
 
