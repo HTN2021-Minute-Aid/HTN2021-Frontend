@@ -19,6 +19,7 @@ const transcriptContentUrl = "https://minute-aid.herokuapp.com/users/transcripts
 
 interface TranscriptAppProps {
   userID: string;
+  username: string;
 }
 
 const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) => {
@@ -26,7 +27,7 @@ const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) 
   const [selectedTranscript, setSelectedTranscript] = useState<TranscriptContent>(null);
   const [loadingMain, setLoadingMain] = useState<boolean>(true);
   const [loadingTranscript, setLoadingTranscript] = useState<boolean>(true);
-  
+
   const getData = async () => {
     try {
       const res = await fetch(userTranscriptUrl, {
@@ -116,7 +117,7 @@ const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) 
         <Sidebar transcriptNames={data.transcripts.map(convertIdToInfo)} clickHandler={getSelectedTranscript} />
         {/* <Sidebar transcriptNames={[{name: "transcript a", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}, {name: "transcript bbb", contentID:"no"}]} clickHandler={coolDebugger} /> */}
         {!loadingTranscript ? <InfoPanel transcript={selectedTranscript}/> : <InfoPanel transcript={undefined} /> }
-        
+
       </div>
     );
   }
@@ -124,9 +125,9 @@ const TranscriptApp: React.FC<TranscriptAppProps> = (props: TranscriptAppProps) 
   return (
     <div id="top" className="App">
       <header className="App-header">
-        <Header />
+        <Header username={props.username}/>
       </header>
-      
+
       {(!loadingMain || debug) ? generateDynamicPage() : undefined}
     </div>
   );
