@@ -15,29 +15,34 @@ export interface LoginProps {
 
 export const Login: React.FC<LoginProps> = (props: LoginProps) => {
   const firebaseLogin = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const userInfo = await firebase.auth().signInWithPopup(provider);
-    const uid = userInfo.user.uid;
-    
-    props.onFirebaseSuccess(uid);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider).then(userInfo => {
+        const uid = userInfo.user.uid;
+        props.onFirebaseSuccess(uid);
+      });
+    });
   }
   
   return (
-    <div className="login-box">
-      <img className="main-logo" src="icon128.png" alt="" />
-      <button className="google-container fblogin" onClick={firebaseLogin}>
-        {/* <GoogleLogin
-          clientId={clientID}
-          onSuccess={props.onSuccess}
-          onFailure={props.onFailure}
-          cookiePolicy={'single_host_origin'}
-          isSignedIn={true}
-        /> */}
-        <img className="fblogin-logo" src="google.png" alt="" />
-        <p  className="fblogin-text">
-        Sign in through Google
-        </p>
-      </button>
+    <div className="background" style={{}}>
+      <div className="login-box">
+        <img className="main-logo" src="icon128.png" alt="" />
+        <button className="google-container fblogin" onClick={firebaseLogin}>
+          {/* <GoogleLogin
+            clientId={clientID}
+            onSuccess={props.onSuccess}
+            onFailure={props.onFailure}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+          /> */}
+          <img className="fblogin-logo" src="google.png" alt="" />
+          <p  className="fblogin-text">
+          Sign in through Google
+          </p>
+        </button>
+      </div>
     </div>
   )
 }
